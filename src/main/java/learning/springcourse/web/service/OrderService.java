@@ -1,9 +1,9 @@
-package learning.springcourse.web.Service;
+package learning.springcourse.web.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import learning.springcourse.web.Model.Order;
-import learning.springcourse.web.Repository.OrderRepository;
+import learning.springcourse.web.model.Order;
+import learning.springcourse.web.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

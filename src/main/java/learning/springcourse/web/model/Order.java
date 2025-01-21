@@ -1,4 +1,4 @@
-package learning.springcourse.web.Model;
+package learning.springcourse.web.model;
 
 import jakarta.persistence.*;
 

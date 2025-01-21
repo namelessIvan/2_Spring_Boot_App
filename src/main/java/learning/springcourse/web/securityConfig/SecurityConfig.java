@@ -1,0 +1,40 @@
+package learning.springcourse.web.securityConfig;
+
+
+import learning.springcourse.web.filter.CustomAuthFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+@Configuration
+public class SecurityConfig {
+
+    @Autowired
+    public CustomAuthFilter customAuthFilter;
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .authorizeHttpRequests(
+                        auth -> auth
+//                                .requestMatchers("/api/orders").hasAuthority("USER")
+//                                .requestMatchers("/api/orders/**").hasAuthority("ADMIN")
+//                                .anyRequest().permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/orders").hasAnyAuthority("USER", "ADMIN") // создание заказа
+                                .requestMatchers(HttpMethod.GET, "/api/orders/{id}").hasAnyAuthority("USER", "ADMIN") // получение заказа по ID
+                        // Доступ для администраторов: изменение статуса и удаление
+                                .requestMatchers(HttpMethod.PUT, "/api/orders/**").hasAuthority("ADMIN") // изменение заказа
+                                .requestMatchers(HttpMethod.DELETE, "/api/orders/**").hasAuthority("ADMIN") // удаление заказа
+                )
+                .addFilterBefore(customAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
+                .build();
+    }
+
+}

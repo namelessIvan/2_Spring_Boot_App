@@ -1,6 +1,6 @@
-package learning.springcourse.web.Repository;
+package learning.springcourse.web.repository;
 
-import learning.springcourse.web.Model.Order;
+import learning.springcourse.web.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

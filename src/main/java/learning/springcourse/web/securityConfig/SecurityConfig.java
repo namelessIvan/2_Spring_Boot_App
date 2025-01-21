@@ -22,12 +22,9 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(
                         auth -> auth
-//                                .requestMatchers("/api/orders").hasAuthority("USER")
-//                                .requestMatchers("/api/orders/**").hasAuthority("ADMIN")
-//                                .anyRequest().permitAll()
+
                                 .requestMatchers(HttpMethod.POST, "/api/orders").hasAnyAuthority("USER", "ADMIN") // создание заказа
                                 .requestMatchers(HttpMethod.GET, "/api/orders/{id}").hasAnyAuthority("USER", "ADMIN") // получение заказа по ID
-                        // Доступ для администраторов: изменение статуса и удаление
                                 .requestMatchers(HttpMethod.PUT, "/api/orders/**").hasAuthority("ADMIN") // изменение заказа
                                 .requestMatchers(HttpMethod.DELETE, "/api/orders/**").hasAuthority("ADMIN") // удаление заказа
                 )

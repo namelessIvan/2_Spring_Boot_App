@@ -6,6 +6,7 @@ import learning.springcourse.web.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDateTime;
 
 
 
@@ -13,15 +14,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/orders")
 public class OrderController {
 
-    @Autowired
     private OrderService orderService;
+
+    @Autowired
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
     //Метод для создания заказа
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody RequestOrder requestOrder) {
-        Order order = new Order();
-        order.setFoodName(requestOrder.getFoodName());
-        Order createdOrder = orderService.createOrder(order);
-        return ResponseEntity.ok(createdOrder);
+        Order createOrder = orderService.createOrder(requestOrder);
+        return ResponseEntity.ok(createOrder);
     }
     // Метод для обновления статуса заказа
     @PutMapping("/{id}/status")
@@ -29,7 +32,6 @@ public class OrderController {
         Order updateOrder = orderService.updateOrderStatus(id, status);
         return ResponseEntity.ok(updateOrder);
     }
-
     // Метод для получения текущего состояния заказа
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrder(@PathVariable Long id){
@@ -41,11 +43,5 @@ public class OrderController {
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
     }
-
-
-//    @GetMapping("/hello")
-//    public void test(@RequestParam String data){
-//        System.out.println(data);
-//    }
 
 }

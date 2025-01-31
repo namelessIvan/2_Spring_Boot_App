@@ -76,11 +76,7 @@ public class User implements UserDetails {
         return true; // Учетная запись включена
     }
 
-    public User() {
-
-    }
-
-
+    public User() {}
 
     public User(String email, String phone, String fio, LocalDateTime createAt, LocalDateTime updateAt) {
         this.email = email;
@@ -133,4 +129,6 @@ public class User implements UserDetails {
     public void setUsername(String username) {
         this.username = username;
     }
+
+
 }

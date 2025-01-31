@@ -1,6 +1,7 @@
 package learning.springcourse.web.service;
 
 
+import learning.springcourse.web.model.RequestOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import learning.springcourse.web.model.Order;
 import learning.springcourse.web.repository.OrderRepository;
@@ -10,10 +11,20 @@ import java.time.LocalDateTime;
 
 @Service
 public class OrderService {
-    @Autowired
+
     private OrderRepository orderRepository;
+
+    @Autowired
+    public OrderService(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 //•	Создание заказа
-    public Order createOrder (Order order){
+    public Order createOrder (RequestOrder requestOrder){
+        Order order = new Order();
+        order.setFoodName(requestOrder.getFoodName());
+        order.setStatus(requestOrder.getStatus());
+        order.setCreateAt(LocalDateTime.now());
+        order.setUpdateAt(LocalDateTime.now());
         return orderRepository.save(order);
     }
 //•	Обновление статуса заказа

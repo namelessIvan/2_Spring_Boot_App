@@ -14,8 +14,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
+    private CustomAuthFilter customAuthFilter;
+
     @Autowired
-    public CustomAuthFilter customAuthFilter;
+    public SecurityConfig(CustomAuthFilter customAuthFilter) {
+        this.customAuthFilter = customAuthFilter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

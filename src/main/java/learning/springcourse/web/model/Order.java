@@ -25,9 +25,7 @@ public class Order {
     @Column(name = "food_name", nullable = false)
     private String foodName;
 
-    public Order() {
-
-    }
+    public Order() {}
 
     public Order(LocalDateTime createAt, LocalDateTime updateAt) {
         this.createAt = LocalDateTime.now();
